@@ -42,21 +42,19 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Desktop() {
-    const [checked, setChecked] = React.useState(true);
-
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Item>
-                            <Card sx={{minWidth: 300, minHeight: 700, maxHeight: 700  }}>
+                            <Card sx={{minWidth: 500, minHeight: 700, maxHeight: 700  }}>
                                 <CardContent>
                                     <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
                                         Incident Map
                                     </Typography>
                                     <div>
-                                    <LineChart width={450} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                    <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                                         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
                                         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                                         <XAxis dataKey="name" />
@@ -76,7 +74,7 @@ export default function Desktop() {
                                         Captured Feed
                                     </Typography>
                                     <TableContainer component={Paper}>
-                                        <Table sx={{ maxWidth: 400 }} aria-label="simple table">
+                                        <Table sx={{ maxWidth: 700 }} aria-label="simple table">
                                             <TableHead>
                                                 <TableRow>
                                                     <TableCell>Time</TableCell>
