@@ -15,10 +15,35 @@ export default function Desktop() {
 
     const cookies = new Cookies();
 
-    const onSubmit = (data: any) => {
+    const onCreate = (data: any) => {
         console.log(data);
         // make the api call
         fetch('http://localhost:3001/createAccount', {
+            method: 'POST',
+            //cors should not be used
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data1) => {
+            console.log(data1);
+            if (data1.status === true) {
+                cookies.set('token', data1.token, { path: '/' });
+                window.location.href = '/dashboard';
+            }
+        }).catch((e: any) => {
+            alert('Failed to login!')
+        });
+    };
+
+    const onLogin = (data: any) => {
+        console.log(data);
+        // make the api call
+        fetch('http://localhost:3001/login', {
             method: 'POST',
             //cors should not be used
             mode: 'cors',
@@ -54,7 +79,7 @@ export default function Desktop() {
 
             <div className="split right">
                 <div className="centered">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onCreate)}>
                         <div className="form-control">
                             <label>Email</label>
                             <br />
@@ -86,7 +111,7 @@ export default function Desktop() {
                         <div className="form-control">
                             <label></label>
                             <button type="submit" className="SignUp">Sign Up</button>
-                            <button type="submit" className="SignUp" style={{marginLeft: '20px'}}>Login</button>
+                            <button onSubmit={handleSubmit(onLogin)} className="SignUp" style={{marginLeft: '20px'}}>Login</button>
                         </div>
                     </form>
                 </div>
