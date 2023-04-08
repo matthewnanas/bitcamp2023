@@ -2,15 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
-const fs = require('fs');
 const { send } = require("./trigger/smsTools");
 
 
 var jsonParser = bodyParser.json()
-const TOKEN_SECRET = "5a236c0e36eaf7206b9124226313a21538f961dd35ff69b131e91e87ae688dccc7f91718fcf7c99d1062e94edf569cfb0b32f4e14867b44205a057e1873e19ed";
+
 const app = express();
-const port = 8080;
+const port = 3000;
 
 mongoose.connect("mongodb://localhost:27017/admin");
 
@@ -50,6 +48,7 @@ app.post('/addPhone', jsonParser, async(req, res) => {
 
     res.json({success: false, message: "Number exists"});
 });
+
 app.post('/removePhone', jsonParser, async(req, res) => {
     // TODO: Remove phone from database
     let numberToRemove = req.body.number;
@@ -59,7 +58,6 @@ app.post('/removePhone', jsonParser, async(req, res) => {
 app.post('/incomingSms', jsonParser, async(req, res) => {
     // Check if message is "stop," check if number in db
     let text = req.body.text.lower();
-    let number = req.body.number;
     
     if(text == "stop") {
         removed = removePhone(req.body.number);
@@ -69,14 +67,12 @@ app.post('/incomingSms', jsonParser, async(req, res) => {
         } else {
             res.json({success: false, message: "Number not removed"});
         }
-    } else if(text == "y" || text == "yes" && numbersWaiting.includes(number)) {
-        let number = await numbers.create({number: number});
+    } else if(text == "y" || text == "yes" && numbersWaiting.includes(req.)) {
+        let number = await numbers.create({number: numberToAdd});
         if(number) {
             res.json({success: true, message: "Number added"});
-            send(number, "Watching :)");
         } else {
             res.json({success: false, message: "Number not added"});
-            send(number, "Not Watching :(");
         }
     }
 
@@ -111,7 +107,7 @@ app.post('/login', jsonParser, async(req, res) => {
     if(account) {
         let hash = crypto.createHash('sha256').update(password).digest('hex');
         if(hash==account.password) {
-            res.json({status: true, message: "Logged in", token: jwt.sign({email: email}, TOKEN_SECRET, {expiresIn: '6h'})});
+            res.json({status: true, message: "Logged in"});
             // login
         } else {
             res.json({status: false, message: "Account doesn't exist"});
@@ -124,21 +120,6 @@ app.post('/login', jsonParser, async(req, res) => {
     }
 });
 
-app.get('/getAccount', jsonParser, async(req, res) => {
-    let token = req.headers.authorization;
-    if(token) {
-        token = token.replace("Bearer ", "");
-        let decoded = jwt.verify(token, TOKEN_SECRET);
-        let account = await accounts.findOne({email: decoded.email});
-        if(account) {
-            res.json({status: true, message: "Account found", account:{email: account.email, numbers: account.numbers}});
-        } else {
-            res.json({status: false, message: "Account not found"});
-        }
-    } else {
-        res.json({status: false, message: "Missing authentication token"});
-    }
-});
 
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
