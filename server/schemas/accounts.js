@@ -7,6 +7,4 @@ const accounts = model('accounts', new Schema({
     created: Date
 }));
 
-
-
 module.exports = accounts;
