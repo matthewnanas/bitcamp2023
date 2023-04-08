@@ -32,6 +32,30 @@ export default function Mobile() {
             alert('Failed to login!')
         });
     };
+    const onLogin = (data: any) => {
+        console.log(data);
+        // make the api call
+        fetch('http://localhost:3001/login', {
+            method: 'POST',
+            //cors should not be used
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data1) => {
+            console.log(data1);
+            if (data1.status === true) {
+                cookies.set('token', data1.token, { path: '/' });
+                window.location.href = '/dashboard';
+            }
+        }).catch((e: any) => {
+            alert('Failed to login!')
+        });
+    };
 
     return (
         <div className="centered">
@@ -64,7 +88,7 @@ export default function Mobile() {
                 <div className="form-control">
                     <label></label>
                     <button type="submit" className="SignUp">Sign Up</button>
-                    <button type="submit" className="SignUp" style={{marginLeft: '20px'}}>Login</button>
+                    <button onSubmit={handleSubmit(onLogin)} type="submit" className="SignUp" style={{marginLeft: '20px'}}>Login</button>
                 </div>
             </form>
         </div>
