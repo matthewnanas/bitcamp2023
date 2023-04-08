@@ -31,7 +31,7 @@ export default function Desktop() {
         }
         ).then((data1) => {
             console.log(data1);
-            if (data1.status == true) {
+            if (data1.status === true) {
                 cookies.set('token', data1.token, { path: '/' });
                 window.location.href = '/dashboard';
             }
@@ -78,7 +78,7 @@ export default function Desktop() {
                             )}
                             {errors.password && errors.password.type === "minLength" && (
                                 <p className="errorMsg">
-                                Password should be at-least 8 characters.
+                                    Password should be at-least 8 characters.
                                 </p>
                             )}
                         </div>

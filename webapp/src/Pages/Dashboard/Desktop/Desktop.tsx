@@ -1,7 +1,7 @@
 import React from "react";
 import './Desktop.css';
-import { Box, Button, Card, CardActions, CardContent, FormControlLabel, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { Box, Card, CardContent, FormControlLabel, Grid, Modal, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, styled } from "@mui/material";
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
 
@@ -42,7 +42,13 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Desktop() {
+    const [open, setOpen] = React.useState(false);
     const [checked, setChecked] = React.useState(true);
+    const [phone, setPhone] = React.useState('');
+
+    const submit = () => {
+        alert(phone)
+    }
 
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
@@ -67,7 +73,7 @@ export default function Desktop() {
                                         Manage Team
                                     </Typography>
                                     <div style={{ height: '50px', marginTop: '10px' }}>
-                                        <button className="DesktopTableUtil">Add Member</button>
+                                        <button className="DesktopTableUtil" onClick={() => setOpen(true)}>Add Member</button>
                                         <button className="DesktopTableUtil" style={{marginLeft: '10px'}}>Remove</button>
                                     </div>
                                     <div style={{ height: 400, maxWidth: '500px' }}>
@@ -137,6 +143,31 @@ export default function Desktop() {
                     </Grid>
                 </Grid>
             </Box>
+
+            <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{
+                    position: 'absolute' as 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 400,
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <TextField id="outlined-search" label="📞 Number" type="text" onChange={(e: any) => setPhone(e.target.value)} value={phone} />
+                    <br />
+                    <button className='DesktopNumberAdd' onClick={() => submit()} style={{marginTop: '20px'}}>
+                        Submit
+                    </button>
+                </Box>
+            </Modal>
         </div>
     )
 }

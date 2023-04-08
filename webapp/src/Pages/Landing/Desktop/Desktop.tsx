@@ -28,7 +28,6 @@ export default function Desktop() {
         ).then((data1) => {
             console.log(data1);
         });
-        // alert(phone + ' ' + zip)
     }
 
     return (
