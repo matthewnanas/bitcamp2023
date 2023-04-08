@@ -35,6 +35,8 @@ export default function Desktop() {
                 cookies.set('token', data1.token, { path: '/' });
                 window.location.href = '/dashboard';
             }
+        }).catch((e: any) => {
+            alert('Failed to login!')
         });
     };
 

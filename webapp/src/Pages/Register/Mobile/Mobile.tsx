@@ -28,6 +28,8 @@ export default function Mobile() {
                 cookies.set('token', data1.token, { path: '/' });
                 window.location.href = '/dashboard';
             }
+        }).catch((e: any) => {
+            alert('Failed to login!')
         });
     };
 
