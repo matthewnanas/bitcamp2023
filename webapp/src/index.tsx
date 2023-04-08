@@ -6,9 +6,10 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import Dashboard from './Pages/Dashboard/Dashboard';
+import Incidents from './Pages/Incidents/Incidents';
 import Landing from './Pages/Landing/Landing';
 import Register from './Pages/Register/Register';
+import Dashboard from './Pages/Dashboard/Dashboard';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,8 +19,9 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/incidents" element={<Incidents />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   </>

@@ -16,6 +16,7 @@ export default function Desktop() {
     const cookies = new Cookies();
 
     const onSubmit = (data: any) => {
+<<<<<<< Updated upstream
         console.log(data);
         // make the api call
         fetch('http://localhost:3001/createAccount', {
@@ -36,6 +37,9 @@ export default function Desktop() {
                 window.location.href = '/dashboard';
             }
         });
+=======
+        window.location.href = '/dashboard'
+>>>>>>> Stashed changes
     };
 
     return (
@@ -83,7 +87,8 @@ export default function Desktop() {
                         <br />
                         <div className="form-control">
                             <label></label>
-                            <button type="submit" className="SignUp">Login</button>
+                            <button type="submit" className="SignUp">Sign Up</button>
+                            <button type="submit" className="SignUp" style={{marginLeft: '20px'}}>Login</button>
                         </div>
                     </form>
                 </div>

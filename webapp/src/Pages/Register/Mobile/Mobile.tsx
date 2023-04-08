@@ -61,7 +61,8 @@ export default function Mobile() {
                 <br />
                 <div className="form-control">
                     <label></label>
-                    <button type="submit" className="SignUp">Login</button>
+                    <button type="submit" className="SignUp">Sign Up</button>
+                    <button type="submit" className="SignUp" style={{marginLeft: '20px'}}>Login</button>
                 </div>
             </form>
         </div>

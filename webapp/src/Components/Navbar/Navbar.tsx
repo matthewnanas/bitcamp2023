@@ -29,11 +29,11 @@ export default function Navbar() {
                             <NavLink to="/">Home</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dashboard">Dashboard</NavLink>
+                            <NavLink to="/Incidents">Incidents</NavLink>
                         </li>
                         <li>
                             <button className='register' onClick={() => openRegister()}>
-                                Register
+                                Dashboard
                             </button>
                         </li>
                     </ul>
