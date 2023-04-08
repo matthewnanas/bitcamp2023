@@ -16,7 +16,6 @@ export default function Desktop() {
     const cookies = new Cookies();
 
     const onSubmit = (data: any) => {
-<<<<<<< Updated upstream
         console.log(data);
         // make the api call
         fetch('http://localhost:3001/createAccount', {
@@ -37,9 +36,6 @@ export default function Desktop() {
                 window.location.href = '/dashboard';
             }
         });
-=======
-        window.location.href = '/dashboard'
->>>>>>> Stashed changes
     };
 
     return (
