@@ -1,16 +1,45 @@
 #Bitcamp2023
-Bitcamp 2023 surveillance project
 
-Welcome to ____ (fill in name). 
+<h1>Bitcamp 2023 Surveillance Project</h1>
 
-Currently in the United States, shootings are running rampant, endangering the innocent lives of those that live in those areas. 
+Welcome to Project ____. THis project was created by Adam Lederer, Matthew Nanas, Rohit Sharma, and Sadou Sow.
 
-Gun violence has become the leading cause for deaths in children today. (not sure if I should add this)
+<h2> Problem Statement</h2>
 
-What if there was a way to combat this and help potentially save the lives of our loved ones. That is where we come in, with our newly created project ___.
+Currently in the United States, gun violence is a growing issuse that is endangering the lives of innocent people all across the nation. Shootings are occuring at an all time high, with children being the most impacted. According to the National Institutes of Health, gun violence is now the leading cause of death in children today.
 
-_____ is a project created by Matthew Nanas, Adam Lederer, Rohit Sharma, and Sadou Sow, which is able to recgonize different types of firearms using surveillance cameras.
-After identifying the firearm, ___ will send out an alert with both a text message and a picture to those within the surrounding area, who registered their number and zipcode on our website.
+<h2> Solution </h2>
 
-The major goal with our project is to help shorten response time between the event occuring and getting help on the scene.  
+Our project aims to protect those in the event of gun violence by using surveillance cameras to recgonize different types of firearms. Once a firearm is detected, our system will send out alerts via text message to registered users in the surrounding area. This tex message will contain an address, time, and picture of where and when the event is occuring.
+
+<h2> Register </h2>
+
+To register for our system, follow these simple and easy steps:
+
+1) Visit our website at ____________
+
+2) Click on the register icon and fill in both your phone number and zip code
+
+3) Confirm your phone number 
+
+4) Done!
+
+<h2> Technical Details </h2>
+
+Our project was built using Node.JS, React, MongoDB, Express.JS, Typescript, SHA256 Hashing, JWT, Twilio, Google Maps API, Google Geolocation API, Microsoft Azure, and Azure Machine learning
+
+For the backend API we utalized Node.js
+
+For the front end we utalized React
+
+We used MongoDB to store phone numbers, acounts, and secure passwords
+
+<h2> Future Improvements </h2>
+
+In the future, we plan to expand our system into schools, restaurants, etc. to help combat gun violence on a greater scale.
+
+<h2> Closing Statement </h2>
+
+Thank you for using our system to help combat gun violence and potentially save lives!
+
 
