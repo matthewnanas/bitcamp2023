@@ -10,6 +10,10 @@ export default function Navbar() {
         setShowNavbar(!showNavbar)
     }
 
+    const openRegister = () => {
+        window.location.href = '/register'
+    }
+
     return (
         <nav className="navbar">
             <div className="container">
@@ -28,7 +32,7 @@ export default function Navbar() {
                             <NavLink to="/dashboard">Dashboard</NavLink>
                         </li>
                         <li>
-                            <button className='register' onClick={() => alert('Clicked')}>
+                            <button className='register' onClick={() => openRegister()}>
                                 Register
                             </button>
                         </li>

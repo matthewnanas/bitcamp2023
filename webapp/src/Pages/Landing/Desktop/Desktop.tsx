@@ -6,7 +6,6 @@ import Blob2 from '../../../Assets/Blobs/Blob2.svg'
 import Blob3 from '../../../Assets/Blobs/Blob3.svg'
 import Blob4 from '../../../Assets/Blobs/Blob4.svg'
 
-
 export default function Desktop() {
     return (
         <div>
