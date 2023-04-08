@@ -1,11 +1,19 @@
 import React from "react";
 import Navbar from "../../Components/Navbar/Navbar";
+import Desktop from "./Desktop/Desktop";
+import { useMediaQuery } from "react-responsive";
+import Mobile from "./Mobile/Mobile";
 
-export default function Incidents() {
+export default function Dashboard() {
+    const isDesktop = useMediaQuery({
+        query: '(min-width: 768px)'
+    })
+    
     return (
         <div>
             <Navbar />
-            <h1>Know <span style={{color: '#ff0000'}}>before</span> it happens</h1>
+            {isDesktop && <Desktop />}
+            {!isDesktop && <Mobile />}
         </div>
     )
 }
