@@ -3,7 +3,6 @@ import './Desktop.css';
 import { Box, Card, CardContent, FormControlLabel, Grid, Modal, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, styled } from "@mui/material";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -15,23 +14,6 @@ const columns: GridColDef[] = [
         width: 120,
     },
 ];
-
-const rows = [
-    { id: 1, Name: 'Matthew Nanas', Phone: '123 123 1234' },
-    { id: 2, Name: 'Rohit Sharma', Phone: '123 123 1234' },
-    { id: 3, Name: 'Adam Lederer', Phone: '123 123 1234' },
-]
-
-const feed = [
-    {
-        time: '2023-04-08T03:34:27+0000',
-        location: 'Maryland'
-    },
-    {
-        time: '2023-04-08T03:34:27+0000',
-        location: 'Maryland'
-    },
-]
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -46,9 +28,49 @@ export default function Desktop() {
     const [checked, setChecked] = React.useState(true);
     const [phone, setPhone] = React.useState('');
 
+    // Display data
+    const [chartData, setChartData] = React.useState([{name: 'Week 1', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 0, pv: 2400, amt: 2400}])
+    const [roster, setRoster] = React.useState([])
+    const [feed, setFeed] = React.useState<any[]>([])
+
     const submit = () => {
         alert(phone)
     }
+
+    React.useEffect(() => {
+        fetch("http://localhost:3001/getIncidentChartData", {
+            "headers": {
+                "accept": "application/json",
+            },
+            "method": "GET",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            setChartData(data);
+        });
+
+        fetch("http://localhost:3001/getRoster", {
+            "headers": {
+                "accept": "application/json",
+            },
+            "method": "GET",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            setRoster(data);
+        });
+
+        fetch("http://localhost:3001/getInternalIncidents", {
+            "headers": {
+                "accept": "application/json",
+            },
+            "method": "GET",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            setFeed(data);
+        });
+    }, [])
 
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
@@ -78,7 +100,7 @@ export default function Desktop() {
                                     </div>
                                     <div style={{ height: 400, maxWidth: '500px' }}>
                                         <DataGrid
-                                            rows={rows}
+                                            rows={roster}
                                             columns={columns}
                                             checkboxSelection
                                         />
@@ -95,7 +117,7 @@ export default function Desktop() {
                                         Incident Overview
                                     </Typography>
                                     <div>
-                                    <LineChart width={450} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                    <LineChart width={450} height={300} data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                                         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
                                         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                                         <XAxis dataKey="name" />
@@ -123,7 +145,7 @@ export default function Desktop() {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {feed.map((row, i) => (
+                                                {feed.length > 0 ? feed.map((row, i) => (
                                                     <TableRow
                                                         key={i}
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -133,7 +155,7 @@ export default function Desktop() {
                                                         </TableCell>
                                                         <TableCell align="right">{row.location}</TableCell>
                                                     </TableRow>
-                                                ))}
+                                                )) : null}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
