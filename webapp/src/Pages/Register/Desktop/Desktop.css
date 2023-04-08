@@ -44,3 +44,25 @@
     height: 30%;
     bottom: 0;
 }
+
+.SignUp:hover {
+    background-color: #ba0101;
+    border-radius: 50px;
+    border: none;
+    width: 100;
+    height: 50px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.SignUp {
+    background-color: #FF0000;
+    border-radius: 50px;
+    border: none;
+    width: 100px;
+    height: 50px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: larger;
+}
