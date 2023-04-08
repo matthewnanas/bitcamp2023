@@ -40,9 +40,10 @@ export default function Mobile() {
                         </p>
                     )}
                 </div>
+                <br />
                 <div className="form-control">
                     <label></label>
-                    <button type="submit">Login</button>
+                    <button type="submit" className="SignUp">Login</button>
                 </div>
             </form>
         </div>

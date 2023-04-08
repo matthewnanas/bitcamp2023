@@ -33,6 +33,7 @@ export default function Desktop() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control">
                             <label>Email</label>
+                            <br />
                             <input type="text" {...register("email", {
                                 required: true,
                             })} />
@@ -40,8 +41,10 @@ export default function Desktop() {
                                 <p className="errorMsg">Email is required.</p>
                             )}
                         </div>
+                        <br />
                         <div className="form-control">
                             <label>Password</label>
+                            <br />
                             <input type="password" {...register("password", {
                                 required: true,
                                 minLength: 8
@@ -55,9 +58,10 @@ export default function Desktop() {
                                 </p>
                             )}
                         </div>
+                        <br />
                         <div className="form-control">
                             <label></label>
-                            <button type="submit">Login</button>
+                            <button type="submit" className="SignUp">Login</button>
                         </div>
                     </form>
                 </div>
