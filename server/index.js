@@ -14,8 +14,8 @@ const port = 8080;
 
 mongoose.connect("mongodb://localhost:27017/admin");
 
-const numbers = require("./db/schemas/numbers.js");
-const accounts = require("./db/schemas/accounts.js");
+const numbers = require("./schemas/numbers.js");
+const accounts = require("./schemas/accounts.js");
 // const incidents = "./db/schemas/incidents.js";
 
 let numbersWaiting = [];
@@ -40,16 +40,11 @@ app.post('/addPhone', jsonParser, async(req, res) => {
     let numberToAdd = req.body.number;
     let number = await numbers.findOne({number: numberToAdd});
     if(!number) {
-        if(!numbersWaiting.includes(numberToAdd)) {
-            numbersWaiting.push(numberToAdd);
-            let number = await numbers.create({number: numberToAdd});
-            if(number) {
-                res.json({success: true, message: "Number added"});
-            } else {
-                res.json({success: false, message: "Number not added"});
-            }
+        let number = await numbers.create({number: numberToAdd});
+        if(number) {
+            res.json({success: true, message: "Number added"});
         } else {
-            res.json({success: false, message: "Number already waiting"});
+            res.json({success: false, message: "Number not added"});
         }
     } else {
         res.json({success: false, message: "Number already exists"});
