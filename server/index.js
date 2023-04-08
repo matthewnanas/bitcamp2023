@@ -39,16 +39,21 @@ app.post('/addPhone', jsonParser, async(req, res) => {
     // TODO: Add phone to database
     let numberToAdd = req.body.number;
     let number = await numbers.findOne({number: numberToAdd});
-    console.log(number);
     if(!number) {
         if(!numbersWaiting.includes(numberToAdd)) {
             numbersWaiting.push(numberToAdd);
+            let number = await numbers.create({number: numberToAdd});
+            if(number) {
+                res.json({success: true, message: "Number added"});
+            } else {
+                res.json({success: false, message: "Number not added"});
+            }
+        } else {
+            res.json({success: false, message: "Number already waiting"});
         }
-        send(numberToAdd, "Reply Y to register for AmmoWatch notifications.");
-        
+    } else {
+        res.json({success: false, message: "Number already exists"});
     }
-
-    res.json({success: false, message: "Number exists"});
 });
 app.post('/removePhone', jsonParser, async(req, res) => {
     // TODO: Remove phone from database
@@ -56,31 +61,31 @@ app.post('/removePhone', jsonParser, async(req, res) => {
     removePhone(numberToRemove);
 });
 
-app.post('/incomingSms', jsonParser, async(req, res) => {
-    // Check if message is "stop," check if number in db
-    let text = req.body.text.lower();
-    let number = req.body.number;
+// app.post('/incomingSms', jsonParser, async(req, res) => {
+//     // Check if message is "stop," check if number in db
+//     let text = req.body.text.lower();
+//     let number = req.body.number;
     
-    if(text == "stop") {
-        removed = removePhone(req.body.number);
-        if(removed.success) {
-            send()
-            res.json({success: true, message: "Number removed"});
-        } else {
-            res.json({success: false, message: "Number not removed"});
-        }
-    } else if(text == "y" || text == "yes" && numbersWaiting.includes(number)) {
-        let number = await numbers.create({number: number});
-        if(number) {
-            res.json({success: true, message: "Number added"});
-            send(number, "Watching :)");
-        } else {
-            res.json({success: false, message: "Number not added"});
-            send(number, "Not Watching :(");
-        }
-    }
+//     if(text == "stop") {
+//         removed = removePhone(req.body.number);
+//         if(removed.success) {
+//             send()
+//             res.json({success: true, message: "Number removed"});
+//         } else {
+//             res.json({success: false, message: "Number not removed"});
+//         }
+//     } else if(text == "y" || text == "yes" && numbersWaiting.includes(number)) {
+//         let number = await numbers.create({number: number});
+//         if(number) {
+//             res.json({success: true, message: "Number added"});
+//             send(number, "Watching :)");
+//         } else {
+//             res.json({success: false, message: "Number not added"});
+//             send(number, "Not Watching :(");
+//         }
+//     }
 
-});
+// });
 
 app.post('/createAccount', jsonParser, async(req, res) => {
     let email = req.body.email;
