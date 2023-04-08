@@ -1,27 +1,10 @@
 import React from "react";
 import './Desktop.css';
 import { Box, Card, CardContent, FormControlLabel, Grid, Modal, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, styled } from "@mui/material";
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-
-const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'Name', headerName: 'First name', width: 130 },
-    {
-        field: 'Phone',
-        headerName: 'Phone Number',
-        type: 'number',
-        width: 120,
-    },
-];
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+import { columns } from "../../../Components/columns";
+import { Item } from "../../../Components/item";
 
 export default function Desktop() {
     const [open, setOpen] = React.useState(false);
