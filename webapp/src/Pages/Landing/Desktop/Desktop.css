@@ -1,0 +1,76 @@
+.DesktopSubHeading {
+    margin-top: -20px;
+}
+
+.DesktopLandingContainer {
+    z-index: 1;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.DesktopAddNumber {
+    background-color: #FF0000;
+    border-radius: 50px;
+    border: none;
+    width: 225px;
+    height: 50px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.DesktopAddNumber:hover {
+    background-color: #ba0101;
+    border-radius: 50px;
+    border: none;
+    width: 225px;
+    height: 50px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.DesktopDemo {
+    z-index: -1;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    height: 50%;
+}
+
+.Blob1 {
+    position: absolute;
+    left: 0;
+    height: 50%;
+    margin-top: -50px;
+}
+
+.Blob2 {
+    position: absolute;
+    left: 0;
+    height: 50%;
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.Blob3 {
+    position: absolute;
+    height: 40%;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+}
+
+.Blob4 {
+    z-index: -1;
+    position: absolute;
+    right: 0;
+    height: 50%;
+    margin-top: 50px;
+    margin-left: 20px;
+}
