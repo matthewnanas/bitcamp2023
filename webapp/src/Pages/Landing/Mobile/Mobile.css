@@ -32,7 +32,7 @@
     font-size: larger;
 }
 
-.DesktopDemo {
+.MobileDemo {
     z-index: 3;
     position: absolute;
     bottom: 0;
