@@ -15,7 +15,20 @@ export default function Desktop() {
     const [zip, setZip] = React.useState('');
 
     const submit = () => {
-        alert(phone + ' ' + zip)
+        fetch('http://localhost:3001/addPhone', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({number: phone, zip: zip})
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data1) => {
+            console.log(data1);
+        });
+        // alert(phone + ' ' + zip)
     }
 
     return (
