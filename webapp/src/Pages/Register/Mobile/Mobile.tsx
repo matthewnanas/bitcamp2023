@@ -1,8 +1,10 @@
 import React from "react";
 import './Mobile.css'
 import { useForm } from "react-hook-form";
+import Cookies from 'universal-cookie';
 
 export default function Mobile() {
+    const cookies = new Cookies();
     const {
         register,
         handleSubmit,
@@ -11,6 +13,22 @@ export default function Mobile() {
 
     const onSubmit = (data: any) => {
         console.log(data);
+        fetch('http://localhost:3001/createAccount', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data1) => {
+            console.log(data1);
+            if (data.success) {
+                cookies.set('token', data1.token, { path: '/' });
+                window.location.href = '/dashboard';
+            }
+        });
     };
 
     return (

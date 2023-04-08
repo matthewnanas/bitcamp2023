@@ -4,6 +4,7 @@ import RegisterArt from '../../../Assets/RegisterArt.jpg'
 import Blob1 from '../../../Assets/Blobs/Blob1.svg'
 import Blob4 from '../../../Assets/Blobs/Blob4.svg'
 import { useForm } from "react-hook-form";
+import Cookies from 'universal-cookie';
 
 export default function Desktop() {
     const {
@@ -12,8 +13,29 @@ export default function Desktop() {
         formState: { errors }
     } = useForm();
 
+    const cookies = new Cookies();
+
     const onSubmit = (data: any) => {
         console.log(data);
+        // make the api call
+        fetch('http://localhost:3001/createAccount', {
+            method: 'POST',
+            //cors should not be used
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data1) => {
+            console.log(data1);
+            if (data.success) {
+                cookies.set('token', data1.token, { path: '/' });
+                window.location.href = '/dashboard';
+            }
+        });
     };
 
     return (
