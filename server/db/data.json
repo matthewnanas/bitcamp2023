@@ -1,0 +1,10 @@
+{
+    "numbers": [
+        {"number": "", "zip": ""}
+    ],
+    "incidents": [
+        {"location": "",
+        "date": "",
+        "message": ""}
+    ]      
+}
