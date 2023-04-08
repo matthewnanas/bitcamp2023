@@ -31,7 +31,7 @@ export default function Desktop() {
         }
         ).then((data1) => {
             console.log(data1);
-            if (data.success) {
+            if (data1.status == true) {
                 cookies.set('token', data1.token, { path: '/' });
                 window.location.href = '/dashboard';
             }
