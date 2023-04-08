@@ -2,13 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
+var jsonParser = bodyParser.json()
+
 const app = express();
-const port = 3000;
+const port = 3001;
 
-mongoose.connect();
+mongoose.connect("mongodb://localhost:27017/admin");
 
-const numbers = "./db/schemas/numbers.js";
-const incidents = "./db/schemas/incidents.js";
+const numbers = require("./db/schemas/numbers.js");
+// const incidents = "./db/schemas/incidents.js";
 
 
 async function exists(db, query) {
@@ -18,34 +20,32 @@ async function exists(db, query) {
 
 
 
-app.post('/addPhone', async(req, res) => {
+app.post('/addPhone', jsonParser, async(req, res) => {
     // TODO: Add phone to database
     let numberToAdd = req.body.number;
-    let number = await numbers.findOne({tags: numberToAdd});
+    let number = await numbers.findOne({number: numberToAdd});
+    console.log(number);
     if(!number) {
-        number = await numbers.create;
+        number = await numbers.create({number: numberToAdd});
         if(number) {
-            // success
+            res.json({success: true, message: "Number added"});
         } else {
-            // couldn't add
+            res.json({success: false, message: "Number not added"});
         }
     }
 
-
-    res.json({success: true});
+    res.json({success: false, message: "Number exists"});
 });
 
-app.post('/removePhone', async(req, res) => {
+app.post('/removePhone', jsonParser, async(req, res) => {
     // TODO: Remove phone from database
     let numberToRemove = req.body.number;
-    let number = await numbers.findOneAndRemove({tags: numberToRemove});
+    let number = await numbers.findOneAndRemove({number: numberToRemove});
     if(number) {
-        // number removed
+        res.json({success: true, message: "Number removed"});
     } else {
-        // number doesn't exist
+        res.json({success: false, message: "Number not removed"});
     }
-    
-    res.json({success: true});
 });
 
 app.post('/incomingSms', (req, res) => {
@@ -55,6 +55,10 @@ app.post('/incomingSms', (req, res) => {
     }
     
 
-})
+
+});
+
+
+
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
