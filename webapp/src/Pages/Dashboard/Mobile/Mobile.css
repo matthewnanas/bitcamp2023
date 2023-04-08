@@ -1,0 +1,19 @@
+.MobileTableUtil:hover {
+    background-color: #ba0101;
+    border-radius: 20px;
+    border: none;
+    height: 30px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.MobileTableUtil {
+    background-color: #FF0000;
+    border-radius: 20px;
+    border: none;
+    height: 30px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: medium;
+}

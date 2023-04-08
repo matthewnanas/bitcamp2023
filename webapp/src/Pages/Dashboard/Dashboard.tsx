@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Desktop from "./Desktop/Desktop";
 import { useMediaQuery } from "react-responsive";
+import Mobile from "./Mobile/Mobile";
 
 export default function Dashboard() {
     const isDesktop = useMediaQuery({
@@ -12,6 +13,7 @@ export default function Dashboard() {
         <div>
             <Navbar />
             {isDesktop && <Desktop />}
+            {!isDesktop && <Mobile />}
         </div>
     )
 }
