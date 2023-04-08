@@ -10,13 +10,14 @@ const { send } = require("./trigger/smsTools");
 var jsonParser = bodyParser.json()
 const TOKEN_SECRET = "5a236c0e36eaf7206b9124226313a21538f961dd35ff69b131e91e87ae688dccc7f91718fcf7c99d1062e94edf569cfb0b32f4e14867b44205a057e1873e19ed";
 const app = express();
-const port = 8080;
+const port = 3000;
+//mongoose connect with this database: mongodb+srv://admin:MatthewAdamRohit4612@admin.cunckp8.mongodb.net/main
+mongoose.connect("mongodb://admin:MatthewAdamRohit4612@admin.cunckp8.mongodb.net/main", {useNewUrlParser: true, useUnifiedTopology: true});
 
-mongoose.connect("mongodb://localhost:27017/admin");
 
 const numbers = require("./schemas/numbers.js");
 const accounts = require("./schemas/accounts.js");
-// const incidents = "./db/schemas/incidents.js";
+const incidents = require("./schemas/incidents.js");
 
 let numbersWaiting = [];
 
