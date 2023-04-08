@@ -1,16 +1,50 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
 
 const app = express();
 const port = 3000;
 
-app.post('/addPhone', (req, res) => {
+mongoose.connect();
+
+const numbers = "./db/schemas/numbers.js";
+const incidents = "./db/schemas/incidents.js";
+
+
+async function exists(db, query) {
+    res = await db.findOne(query);
+    return true ? res : false;
+}
+
+
+
+app.post('/addPhone', async(req, res) => {
     // TODO: Add phone to database
+    let numberToAdd = req.body.number;
+    let number = await numbers.findOne({tags: numberToAdd});
+    if(!number) {
+        number = await numbers.create;
+        if(number) {
+            // success
+        } else {
+            // couldn't add
+        }
+    }
+
+
     res.json({success: true});
 });
 
-app.post('/removePhone', (req, res) => {
+app.post('/removePhone', async(req, res) => {
     // TODO: Remove phone from database
+    let numberToRemove = req.body.number;
+    let number = await numbers.findOneAndRemove({tags: numberToRemove});
+    if(number) {
+        // number removed
+    } else {
+        // number doesn't exist
+    }
+    
     res.json({success: true});
 });
 
