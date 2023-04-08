@@ -1,9 +1,7 @@
 ## #Bitcamp2023
 Bitcamp 2023 surveillance project
 
-Welcome to ____ (fill in name).
-
-Currently in the United States, shootings are running rampant, endangering the innocent lives of those that live in those areas.
+Welcome to Project ____. This project was created by Adam Lederer, Matthew Nanas, Rohit Sharma, and Sadou Sow.
 
 <h2> Problem Statement</h2>
 
