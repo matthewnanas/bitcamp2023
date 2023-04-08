@@ -1,8 +1,8 @@
-.DesktopSubHeading {
+.MobileSubHeading {
     margin-top: -20px;
 }
 
-.DesktopLandingContainer {
+.MobileLandingContainer {
     z-index: 5;
     margin: auto;
     padding: 10px;
@@ -10,7 +10,7 @@
     margin-top: 25px;
 }
 
-.DesktopAddNumber {
+.MobileAddNumber {
     background-color: #FF0000;
     border-radius: 50px;
     border: none;
@@ -21,11 +21,33 @@
     font-size: larger;
 }
 
-.DesktopAddNumber:hover {
+.MobileAddNumber:hover {
     background-color: #ba0101;
     border-radius: 50px;
     border: none;
     width: 225px;
+    height: 50px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.MobileNumberAdd {
+    background-color: #FF0000;
+    border-radius: 50px;
+    border: none;
+    width: 100px;
+    height: 50px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.MobileNumberAdd:hover {
+    background-color: #ba0101;
+    border-radius: 50px;
+    border: none;
+    width: 100px;
     height: 50px;
     color: #ffffff;
     font-weight: bold;
