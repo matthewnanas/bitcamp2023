@@ -178,6 +178,59 @@ app.get('/getIncidents', async(req, res) => {
     }
 });
 
+// This stuff will be for the "business" accounts
+
+app.get('/getInternalIncidents', async(req, res) => {
+    // Get feed of incidents for business REPLACE THE FILLER CODE HERE
+    const feed = [
+        {
+            time: '2023-04-08T03:34:27+0000',
+            location: 'Maryland'
+        },
+        {
+            time: '2023-04-08T03:34:27+0000',
+            location: 'Maryland'
+        },
+    ]
+
+    res.send(feed)
+});
+
+app.get('/getIncidentChartData', async(req, res) => {
+    // Get chart data for incidents for business REPLACE THE FILLER CODE HERE
+    const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
+    res.send(data)
+});
+
+app.get('/getRoster', async(req, res) => {
+    // Get team roster for business REPLACE THE FILLER CODE HERE
+    const rows = [
+        { id: 1, Name: 'Matthew Nanas', Phone: '123 123 1234' },
+        { id: 2, Name: 'Rohit Sharma', Phone: '123 123 1234' },
+        { id: 3, Name: 'Adam Lederer', Phone: '123 123 1234' },
+    ]
+
+    res.send(rows)
+});
+
+
+app.post('/addToRoster', async(req, res) => {
+    // Add this person to team roster for business REPLACE THE FILLER CODE HERE
+    const example = { Name: 'Matthew Nanas', Phone: '123 123 1234' }
+
+    res.sendStatus(200)
+});
+
+app.post('/addInternalIncident', async(req, res) => {
+    // Add this incident to business feed REPLACE THE FILLER CODE HERE
+    const example = {
+        time: '2023-04-08T03:34:27+0000',
+        location: 'Maryland',
+        imageUrl: 'https://test.com/cool.png'
+    }
+
+    res.sendStatus(200)
+});
 
 
 
