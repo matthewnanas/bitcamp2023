@@ -14,4 +14,13 @@ app.post('/removePhone', (req, res) => {
     res.json({success: true});
 });
 
+app.post('/incomingSms', (req, res) => {
+    // Check if message is "stop," check if number in db
+    if(req.body.lower() == "stop") {
+        // remove from DB, reply
+    }
+    
+
+})
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
