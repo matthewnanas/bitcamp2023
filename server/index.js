@@ -149,5 +149,36 @@ app.get('/getAccount', async(req, res) => {
     }
 });
 
+app.post('/addIncident', async(req, res) => {
+    let incident = await incidents.findOne({location: req.body.location}); // Using Lat/Long it will find the same one
+    if(!incident) {
+        incident = await incidents.create({
+            location: req.body.location,
+            date: req.body.date,
+            message: req.body.message,
+            adminEmail: req.body.adminEmail
+        });
+        if(incident) {
+            res.json({success: true, message: "Incident added"});
+        } else {
+            res.json({success: false, message: "Incident not added"});
+        }
+    } else {
+        res.json({success: false, message: "Number already exists"});
+    }
+});
+
+app.get('/getIncidents', async(req, res) => {
+    if(req.params.allIncidents) {
+        let all = await incidents.find({});
+        res.send({success: true, incidents: all});
+    } else {
+        let all = await incidents.find({adminEmail: null});
+        res.send({success: true, incidents: all});
+    }
+});
+
+
+
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
