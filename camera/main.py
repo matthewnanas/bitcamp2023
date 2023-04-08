@@ -9,12 +9,12 @@ prediction_key = "1fb2ea7ba5cd40fc89939a6d91de51b4"
 endpoint = "https://gundetector-prediction.cognitiveservices.azure.com/"
 prediction_credentials = ApiKeyCredentials(in_headers={"Prediction-key": prediction_key})
 predictor = CustomVisionPredictionClient(endpoint, prediction_credentials)
-camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-ret, image = camera.read()
-cv2.imwrite('capture.png', image)
-with open("capture.png", mode="rb") as captured_image:
+#camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+#camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+#camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+#ret, image = camera.read()
+#cv2.imwrite('Screenshot.jpg', image)
+with open('Screenshot.jpg', mode="rb") as captured_image:
     results = predictor.detect_image(project_id, publish_iteration_name, captured_image)
     print(results)
 # Select color for the bounding box
