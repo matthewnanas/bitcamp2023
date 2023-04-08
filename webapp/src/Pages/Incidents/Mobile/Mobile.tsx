@@ -1,26 +1,8 @@
 import React from "react";
 import './Mobile.css';
-import { Box, Button, Card, CardActions, CardContent, FormControlLabel, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { Box, Card, CardContent, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from "@mui/material";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
-
-const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'Name', headerName: 'First name', width: 130 },
-    {
-        field: 'Phone',
-        headerName: 'Phone Number',
-        type: 'number',
-        width: 120,
-    },
-];
-
-const rows = [
-    { id: 1, Name: 'Matthew Nanas', Phone: '123 123 1234' },
-    { id: 2, Name: 'Rohit Sharma', Phone: '123 123 1234' },
-    { id: 3, Name: 'Adam Lederer', Phone: '123 123 1234' },
-]
 
 const feed = [
     {
@@ -42,8 +24,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Mobile() {
-    const [checked, setChecked] = React.useState(true);
-
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
             <Box sx={{ flexGrow: 1 }}>

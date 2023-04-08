@@ -1,8 +1,9 @@
-#Bitcamp2023
+## #Bitcamp2023
+Bitcamp 2023 surveillance project
 
-<h1>Bitcamp 2023 Surveillance Project</h1>
+Welcome to ____ (fill in name).
 
-Welcome to Project ____. THis project was created by Adam Lederer, Matthew Nanas, Rohit Sharma, and Sadou Sow.
+Currently in the United States, shootings are running rampant, endangering the innocent lives of those that live in those areas.
 
 <h2> Problem Statement</h2>
 
@@ -42,4 +43,10 @@ In the future, we plan to expand our system into schools, restaurants, etc. to h
 
 Thank you for using our system to help combat gun violence and potentially save lives!
 
+The major goal with our project is to help shorten response time between the event occuring and getting help on the scene.
 
+---
+
+### **Dev Requirements**
+
+For Azure libs to work, use python `3.7.9` use [pyenv](https://github.com/pyenv/pyenv) to manage versions
