@@ -4,12 +4,18 @@ const mongoose = require("mongoose");
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const cors = require('cors');
 const { send } = require("./trigger/smsTools");
 
 
 var jsonParser = bodyParser.json()
 const TOKEN_SECRET = "5a236c0e36eaf7206b9124226313a21538f961dd35ff69b131e91e87ae688dccc7f91718fcf7c99d1062e94edf569cfb0b32f4e14867b44205a057e1873e19ed";
 const app = express();
+app.use(jsonParser);
+app.use(cors({
+    origin: "*"
+}));
+
 const port = 3001;
 //mongoose connect with this database: mongodb+srv://admin:MatthewAdamRohit4612@admin.cunckp8.mongodb.net/main
 mongoose.connect("mongodb+srv://admin:MatthewAdamRohit4612@admin.cunckp8.mongodb.net/main?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
@@ -36,7 +42,7 @@ async function removePhone(number) {
     }
 }
 
-app.post('/addPhone', jsonParser, async(req, res) => {
+app.post('/addPhone', async(req, res) => {
     // TODO: Add phone to database
     let numberToAdd = req.body.number;
     let number = await numbers.findOne({number: numberToAdd});
@@ -51,7 +57,7 @@ app.post('/addPhone', jsonParser, async(req, res) => {
         res.json({success: false, message: "Number already exists"});
     }
 });
-app.post('/removePhone', jsonParser, async(req, res) => {
+app.post('/removePhone', async(req, res) => {
     // TODO: Remove phone from database
     let numberToRemove = req.body.number;
     removePhone(numberToRemove);
@@ -83,8 +89,9 @@ app.post('/removePhone', jsonParser, async(req, res) => {
 
 // });
 
-app.post('/createAccount', jsonParser, async(req, res) => {
+app.post('/createAccount', async(req, res) => {
     let email = req.body.email;
+    console.log(req);
     let account = await accounts.findOne({email: email});
     if(!account) {
         let hash = crypto.createHash('sha256').update(req.body.password).digest('hex');
@@ -106,7 +113,7 @@ app.post('/createAccount', jsonParser, async(req, res) => {
 
 })
 
-app.post('/login', jsonParser, async(req, res) => {
+app.post('/login', async(req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     let account = await accounts.findOne({email: email});
@@ -126,7 +133,7 @@ app.post('/login', jsonParser, async(req, res) => {
     }
 });
 
-app.get('/getAccount', jsonParser, async(req, res) => {
+app.get('/getAccount', async(req, res) => {
     let token = req.headers.authorization;
     if(token) {
         token = token.replace("Bearer ", "");

@@ -1,3 +1,9 @@
-function triggerAction(scope) {
+
+
+function triggerCommunity(text) {
+
+}
+
+function triggerPrivate(text, email) {
 
 }

@@ -21,7 +21,7 @@ export default function Desktop() {
         fetch('http://localhost:3001/createAccount', {
             method: 'POST',
             //cors should not be used
-            mode: 'no-cors',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
