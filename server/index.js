@@ -278,9 +278,7 @@ app.get('/getRoster', async(req, res) => {
     }
 
     let rows = [
-        { id: 1, Name: 'Matthew Nanas', Phone: '123 123 1234' },
-        { id: 2, Name: 'Rohit Sharma', Phone: '123 123 1234' },
-        { id: 3, Name: 'Adam Lederer', Phone: '123 123 1234' },
+       
     ];
     let account = await accounts.find({email: email});
 
