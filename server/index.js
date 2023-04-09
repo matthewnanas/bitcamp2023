@@ -45,9 +45,10 @@ async function removePhone(number) {
 app.post('/addPhone', async(req, res) => {
     // TODO: Add phone to database
     let numberToAdd = req.body.number;
+    let zip = req.body.zip;
     let number = await numbers.findOne({number: numberToAdd});
     if(!number) {
-        let number = await numbers.create({number: numberToAdd});
+        let number = await numbers.create({number: numberToAdd, zip: zip});
         if(number) {
             res.json({success: true, message: "Number added"});
         } else {
@@ -160,6 +161,16 @@ app.post('/addIncident', async(req, res) => {
             adminEmail: req.body.adminEmail
         });
         if(incident) {
+            if(req.body.adminEmail == "") {
+                let number = await numbers.find({});
+                let text = `New Alert from AmmoWatch, Incident Detected in ${req.body.location}`
+                for(n of number) {
+                    if(n.zip == req.body.location) {
+                        console.log(n);
+                        send(n.number, text)
+                    }
+                }
+            }
             res.json({success: true, message: "Incident added"});
         } else {
             res.json({success: false, message: "Incident not added"});
@@ -321,7 +332,7 @@ app.post('/addToRoster', async(req, res) => {
             name: req.body.name, number: req.body.number
         }}
     });
-    console.log(account.name);
+    // console.log(account.name);
 
     if(!account) {
         console.log("...");
@@ -350,9 +361,10 @@ app.post('/removeFromRoster', async(req, res) => {
         console.log(i);
         let account = await accounts.findOneAndUpdate({email: email}, {
             $pull: {numbers: {
-                name: i.name, number: i.number
+                name: i.Name, number: i.Phone
             }}
-        })
+        });
+        
     }
     res.send({status: true})
     
@@ -368,6 +380,8 @@ app.post('/addInternalIncident', async(req, res) => {
 
     res.sendStatus(200)
 });
+
+app.post
 
 
 
