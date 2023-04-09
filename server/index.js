@@ -200,7 +200,7 @@ app.get('/getIncidentBusinessChart', async(req, res) => {
     console.log(week4);
     let week3 = await incidents.find({$and: [{date: {$gte: now - week*3}}, {date: {$lte: now - week*2}}, {adminEmail: {$eq: email}}]});
     let week2 = await incidents.find({$and: [{date: {$gte: now - week*2}}, {date: {$lte: now - week}}, {adminEmail: {$eq: email}}]});
-    let week1 = await incidents.find({date: {$gte: now - week}});
+    let week1 = await incidents.find({$and: [{date: {$gte: now - week}}, {adminEmail: {$eq: email}}]});
 
 
     const data = [{name: 'Week 4', uv: week4.length, pv: 2400, amt: 2400}, {name: 'Week 3', uv: week3.length, pv: 2400, amt: 2400}, {name: 'Week 2', uv: week2.length, pv: 2400, amt: 2400}, {name: 'Week 1', uv: week1.length, pv: 2400, amt: 2400}];
