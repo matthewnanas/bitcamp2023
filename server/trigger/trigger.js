@@ -1,5 +1,3 @@
-
-
 function triggerCommunity(text) {
 
 }

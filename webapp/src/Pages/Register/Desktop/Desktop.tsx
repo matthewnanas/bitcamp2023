@@ -34,6 +34,10 @@ export default function Desktop() {
             if (data1.status === true) {
                 cookies.set('token', data1.token, { path: '/' });
                 window.location.href = '/dashboard';
+            } else if(data1.status === false) {
+                if(data1.message === "Account exists") {
+                    onLogin(data);
+                }
             }
         }).catch((e: any) => {
             alert('Failed to login!')
