@@ -170,7 +170,7 @@ app.post('/addIncident', async(req, res) => {
 });
 
 app.get('/getIncidents', async(req, res) => {
-    if(req.params.allIncidents) {
+    if(req.headers.allIncidents) {
         let all = await incidents.find({});
         res.send({success: true, incidents: all});
     } else {
@@ -260,7 +260,6 @@ app.get('/getRoster', async(req, res) => {
         { id: 3, Name: 'Adam Lederer', Phone: '123 123 1234' },
     ];
     let account = await accounts.find({email: email});
-    //console.log(account);
 
     if(account) {
         //console.log(account[0].numbers);
