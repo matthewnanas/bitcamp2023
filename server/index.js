@@ -150,7 +150,7 @@ app.get('/getAccount', async(req, res) => {
 });
 
 app.post('/addIncident', async(req, res) => {
-    let incident = await incidents.findOne({location: req.body.location}); // Using Lat/Long it will find the same one
+    let incident = await incidents.findOne({date: req.body.date}); // Using Lat/Long it will find the same one
     if(!incident) {
         incident = await incidents.create({
             location: req.body.location,
@@ -164,7 +164,7 @@ app.post('/addIncident', async(req, res) => {
             res.json({success: false, message: "Incident not added"});
         }
     } else {
-        res.json({success: false, message: "Number already exists"});
+        res.json({success: false, message: "Date exists"});
     }
 });
 
@@ -198,8 +198,22 @@ app.get('/getInternalIncidents', async(req, res) => {
 
 app.get('/getIncidentChartData', async(req, res) => {
     // Get chart data for incidents for business REPLACE THE FILLER CODE HERE
+    let now = Date.now();
+    let week = 604800000;
+
+    let week4 = await incidents.find({$and: [{date: {$gte: now - week*4}}, {date: {$lte: now - week*3}}]});
+    let week3 = await incidents.find({$and: [{date: {$gte: now - week*3}}, {date: {$lte: now - week*2}}]});
+    let week2 = await incidents.find({$and: [{date: {$gte: now - week*2}}, {date: {$lte: now - week}}]});
+    let week1 = await incidents.find({date: {$gte: now - week}});
+    console.log(week4);
+    console.log(week3);
+    console.log(week2);
+    console.log(week1);
+    week4 = week4
+
+
     const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
-    res.send(data)
+    //res.send(data)
 });
 
 app.get('/getRoster', async(req, res) => {
