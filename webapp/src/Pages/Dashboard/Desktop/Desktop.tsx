@@ -40,9 +40,8 @@ export default function Desktop() {
         }
         ).then((data1) => {
             console.log(data1);
+            window.location.reload()
         });
-
-        
     }
 
 
@@ -60,6 +59,7 @@ export default function Desktop() {
         }
         ).then((data) => {
             console.log(data);
+            window.location.reload()
         });
     }
 
