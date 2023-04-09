@@ -3,6 +3,9 @@ import './Mobile.css';
 import { Box, Button, Card, CardActions, CardContent, FormControlLabel, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { Item } from "../../../Components/item";
+import Cookies from "universal-cookie";
+
 const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
 
 const columns: GridColDef[] = [
@@ -33,16 +36,108 @@ const feed = [
     },
 ]
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-
 export default function Mobile() {
+    const [open, setOpen] = React.useState(false);
     const [checked, setChecked] = React.useState(true);
+    const [phone, setPhone] = React.useState('');
+    const [name, setName] = React.useState('');
+
+    // Display data
+    const [chartData, setChartData] = React.useState([{name: 'Week 1', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 0, pv: 2400, amt: 2400}])
+    const [roster, setRoster] = React.useState([])
+    const [feed, setFeed] = React.useState<any[]>([])
+    const [selected, setSelected] = React.useState<any[]>([])
+
+    const cookies = new Cookies();
+
+    const onRowsSelectionHandler = (ids: any[]) => {
+        const selectedRowsData = ids.map((id: any) => roster.find((row: { id: any; }) => row.id === id));
+        setSelected(selectedRowsData)
+    };
+
+    const submit = () => {
+        fetch('http://localhost:3001/addToRoster', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": cookies.get("token")
+            },
+            body: JSON.stringify({number: phone, name: name})
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data1) => {
+            console.log(data1);
+            window.location.reload()
+        });
+    }
+
+    const deleteFromRoster = () => {
+        fetch('http://localhost:3001/removeFromRoster', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": cookies.get("token")
+            },
+            body: JSON.stringify(selected)
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data) => {
+            console.log(data);
+            window.location.reload()
+        });
+    }
+
+    const timeConverter = (UNIX_timestamp: number) => {
+        var a = new Date(UNIX_timestamp / 1000);
+        return a.toString();
+    }
+
+    React.useEffect(() => {
+        fetch(`http://localhost:3001/getPrivateIncidents`, {
+            "headers": {
+                authorization: cookies.get("token")
+            },
+            "method": "GET",
+        }).then((resp) => {
+            return resp.json();
+        }).then((data) => {
+            console.log(data);
+            if(data.incidents) {
+                setFeed(data.incidents);
+            }
+        });
+        
+        fetch(`http://localhost:3001/getIncidentBusinessChart`, {
+            "headers": {authorization: cookies.get("token")},
+            "method": "GET",
+        }).then((resp) => {
+            return resp.json();
+        }).then((data) => {
+            setChartData(data);
+        });
+
+        fetch("http://localhost:3001/getRoster", {
+            "headers": {authorization: cookies.get("token")},
+            "method": "GET",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            setRoster(data);
+        });
+        
+        fetch("http://localhost:3001/getRoster", {
+            "headers": {authorization: cookies.get("token")},
+            "method": "GET",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            setRoster(data);
+        });
+    }, [])
 
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
@@ -67,14 +162,15 @@ export default function Mobile() {
                                         Manage Team
                                     </Typography>
                                     <div style={{ height: '50px', marginTop: '10px' }}>
-                                        <button className="MobileTableUtil">Add Member</button>
-                                        <button className="MobileTableUtil" style={{marginLeft: '10px'}}>Remove</button>
+                                        <button className="MobileTableUtil" onClick={() => setOpen(true)}>Add Member</button>
+                                        <button className="MobileTableUtil" style={{marginLeft: '10px'}} onClick={() => deleteFromRoster()}>Remove</button>
                                     </div>
                                     <div style={{ height: 400, maxWidth: '500px' }}>
                                         <DataGrid
-                                            rows={rows}
+                                            rows={roster}
                                             columns={columns}
                                             checkboxSelection
+                                            onRowSelectionModelChange={(ids: any) => onRowsSelectionHandler(ids)}
                                         />
                                     </div>
                                 </CardContent>
@@ -86,7 +182,7 @@ export default function Mobile() {
                                         Incident Overview
                                     </Typography>
                                     <div>
-                                    <LineChart width={450} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                    <LineChart width={450} height={300} data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                                         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
                                         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                                         <XAxis dataKey="name" />
@@ -111,17 +207,17 @@ export default function Mobile() {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {feed.map((row, i) => (
+                                                {feed.length > 0 ? feed.map((row, i) => (
                                                     <TableRow
                                                         key={i}
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
                                                         <TableCell component="th" scope="row">
-                                                            {row.time}
+                                                            <a href={row.image} target='_blank' rel="noreferrer">{timeConverter(row.date)}</a>
                                                         </TableCell>
                                                         <TableCell align="right">{row.location}</TableCell>
                                                     </TableRow>
-                                                ))}
+                                                )) : null}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
