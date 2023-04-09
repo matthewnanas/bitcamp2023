@@ -1,12 +1,10 @@
 import React from "react";
 import './Mobile.css';
-import { Box, Button, Card, CardActions, CardContent, FormControlLabel, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { Box, Card, CardContent, FormControlLabel, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { Item } from "../../../Components/item";
 import Cookies from "universal-cookie";
-
-const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -18,23 +16,6 @@ const columns: GridColDef[] = [
         width: 120,
     },
 ];
-
-const rows = [
-    { id: 1, Name: 'Matthew Nanas', Phone: '123 123 1234' },
-    { id: 2, Name: 'Rohit Sharma', Phone: '123 123 1234' },
-    { id: 3, Name: 'Adam Lederer', Phone: '123 123 1234' },
-]
-
-const feed = [
-    {
-        time: '2023-04-08T03:34:27+0000',
-        location: 'Maryland'
-    },
-    {
-        time: '2023-04-08T03:34:27+0000',
-        location: 'Maryland'
-    },
-]
 
 export default function Mobile() {
     const [open, setOpen] = React.useState(false);
