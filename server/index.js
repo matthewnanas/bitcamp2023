@@ -329,8 +329,36 @@ app.post('/addToRoster', async(req, res) => {
         console.log("...");
         return;
     }
-    res.sendStatus(200)
+    res.send({status: true});
 });
+
+app.post('/removeFromRoster', async(req, res) => {
+    let token = req.headers.authorization;
+    if(token) {
+        token = token.replace("Bearer ", "");
+        let decoded = jwt.verify(token, TOKEN_SECRET);
+        let account = await accounts.findOne({email: decoded.email});
+        if(!account) {
+            res.json({status: false, message: "Account not found"});
+            return;
+        }
+        email = decoded.email;
+    } else {
+        res.json({status: false, message: "Missing authentication token"});
+        return;
+    }
+    let arr = req.body;
+    for(i of arr) {
+        console.log(i);
+        let account = await accounts.findOneAndUpdate({email: email}, {
+            $pull: {numbers: {
+                name: i.name, number: i.number
+            }}
+        })
+    }
+    res.send({status: true})
+    
+})
 
 app.post('/addInternalIncident', async(req, res) => {
     // Add this incident to business feed REPLACE THE FILLER CODE HERE

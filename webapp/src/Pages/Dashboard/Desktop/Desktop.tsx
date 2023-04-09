@@ -45,9 +45,6 @@ export default function Desktop() {
         
     }
 
-    const remove = () => {
-        
-    }
 
     const deleteFromRoster = () => {
         fetch('http://localhost:3001/removeFromRoster', {
