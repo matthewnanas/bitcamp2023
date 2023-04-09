@@ -8,11 +8,11 @@ export default function Desktop() {
 
     React.useEffect(() => {
         fetch(`http://localhost:3001/getIncidents`, {
-            "headers": {allIncidents: 'true'},
             "method": "GET",
         }).then((resp) => {
             return resp.json();
         }).then((data) => {
+            console.log(data);
             setFeed(data);
         });
     }, [])
