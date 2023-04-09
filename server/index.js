@@ -196,12 +196,14 @@ app.get('/getIncidentBusinessChart', async(req, res) => {
     let now = Date.now();
     let week = 604800000;
     
-    let week4 = await incidents.find({$and: [{date: {$gte: now - week*4}}, {date: {$lte: now - week*3}}]});
-    let week3 = await incidents.find({$and: [{date: {$gte: now - week*3}}, {date: {$lte: now - week*2}}]});
-    let week2 = await incidents.find({$and: [{date: {$gte: now - week*2}}, {date: {$lte: now - week}}]});
+    let week4 = await incidents.find({$and: [{date: {$gte: now - week*4}}, {date: {$lte: now - week*3}}, {adminEmail: {$eq: email}}]});
+    console.log(week4);
+    let week3 = await incidents.find({$and: [{date: {$gte: now - week*3}}, {date: {$lte: now - week*2}}, {adminEmail: {$eq: email}}]});
+    let week2 = await incidents.find({$and: [{date: {$gte: now - week*2}}, {date: {$lte: now - week}}, {adminEmail: {$eq: email}}]});
     let week1 = await incidents.find({date: {$gte: now - week}});
 
-    const data = [{name: 'Week 4', uv: week1.length, pv: 2400, amt: 2400}, {name: 'Week 3', uv: week2.length, pv: 2400, amt: 2400}, {name: 'Week 2', uv: week3.length, pv: 2400, amt: 2400}, {name: 'Week 1', uv: week4.length, pv: 2400, amt: 2400}];
+
+    const data = [{name: 'Week 4', uv: week4.length, pv: 2400, amt: 2400}, {name: 'Week 3', uv: week3.length, pv: 2400, amt: 2400}, {name: 'Week 2', uv: week2.length, pv: 2400, amt: 2400}, {name: 'Week 1', uv: week1.length, pv: 2400, amt: 2400}];
     res.send(data);
 
 
