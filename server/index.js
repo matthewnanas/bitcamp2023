@@ -170,14 +170,17 @@ app.post('/addIncident', async(req, res) => {
 });
 
 app.get('/getIncidents', async(req, res) => {
-    if(req.headers.allIncidents) {
-        let all = await incidents.find({});
-        res.send({success: true, incidents: all});
-    } else {
-        let all = await incidents.find({adminEmail: {$ne: ""}});
-        res.send({success: true, incidents: all});
-    }
+    console.log("Hi");
+    let all = await incidents.findOne({date: 1679795594515});
+    console.log(all);
+    res.send({success: true, incidents: all});
+
 });
+
+app.get('/getPrivateIncidents', async(req, res) => {
+    let all = await incidents.find({adminEmail: {$ne: ""}});
+    res.send({success: true, incidents: all});
+})
 
 // This stuff will be for the "business" accounts
 
