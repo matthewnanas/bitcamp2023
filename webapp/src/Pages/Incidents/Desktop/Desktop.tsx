@@ -1,7 +1,6 @@
 import './Desktop.css';
 import { Box, Card, CardContent, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from "@mui/material";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
+import { Item } from '../../../Components/item';
 
 const feed = [
     {
@@ -13,14 +12,6 @@ const feed = [
         location: 'Maryland'
     },
 ]
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
 export default function Desktop() {
     return (
@@ -35,13 +26,7 @@ export default function Desktop() {
                                         Incident Map
                                     </Typography>
                                     <div>
-                                    <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                                        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                                        <XAxis dataKey="name" />
-                                        <YAxis />
-                                        <Tooltip />
-                                    </LineChart>
+                                        <iframe title="heatmap" src="./Heatmap/index.html" width="100%" height="500px"></iframe>
                                     </div>
                                 </CardContent>
                             </Card>
