@@ -161,24 +161,46 @@ app.post('/addIncident', async(req, res) => {
             adminEmail: req.body.adminEmail
         });
         if(incident) {
-            if(req.body.adminEmail == "") {
-                let number = await numbers.find({});
-                let text = `New Alert from AmmoWatch, Incident Detected in ${req.body.location}`
-                for(n of number) {
-                    if(n.zip == req.body.location) {
-                        console.log(n);
-                        send(n.number, text, req.body.image);
-                    }
+            sendSms(incident, req);
+            res.send({status: true})
+        }
+     } else {
+            console.log("HI");
+        }
+        
+    
+
+
+});
+
+async function sendSms(incident, req) {
+    console.log("hi");
+    let text = `New Alert from AmmoWatch, Incident Detected in ${req.body.location}`
+
+    if(incident) {
+        if(req.body.adminEmail == "") {
+            let number = await numbers.find({});
+            for(n of number) {
+                if(n.zip == req.body.location) {
+                    console.log(n);
+                    send(n.number, text, req.body.image);
                 }
             }
-            res.json({success: true, message: "Incident added"});
         } else {
-            res.json({success: false, message: "Incident not added"});
+            let account = await accounts.find({email: req.body.adminEmail});
+            if(account) {
+                //console.log(account[0].numbers);
+                if(account[0] != undefined) {
+                    console.log("hi");
+                    for(number of account[0].numbers) {
+                        send(number.number, "[ADMIN] " + text, req.body.image)
+                    }
+                }
+                
         }
-    } else {
-        res.json({success: false, message: "Date exists"});
     }
-});
+}
+}
 
 app.get('/getIncidents', async(req, res) => {
     console.log("Hi");
