@@ -51,7 +51,7 @@ export default function Desktop() {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {feed.map((row, i) => (
+                                                {feed.length > 0 ? feed.map((row, i) => (
                                                     <TableRow
                                                         key={i}
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -61,7 +61,7 @@ export default function Desktop() {
                                                         </TableCell>
                                                         <TableCell align="right">{row.location}</TableCell>
                                                     </TableRow>
-                                                ))}
+                                                )) : null}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
