@@ -62,8 +62,10 @@ export default function Desktop() {
                     boxShadow: 24,
                     p: 4,
                 }}>
-                    <TextField id="outlined-search" label="📞 Number" type="text" onChange={(e: any) => setPhone(e.target.value)} value={phone} />
-                    <TextField id="outlined-search" label="📍 Zip Code" type="text" onChange={(e: any) => setZip(e.target.value)} value={zip} />
+                    <TextField id="outlined-search" label="📞 Number" type="text" onChange={(e: any) => setPhone(e.target.value)} value={phone} style={{marginBottom: '20px', width: '400px'}} />
+                    <br />
+                    <TextField id="outlined-search" label="📍 Zip Code" type="text" onChange={(e: any) => setZip(e.target.value)} value={zip} style={{width: '400px'}}/>
+                    <br />
                     <button className='DesktopNumberAdd' onClick={() => submit()} style={{marginTop: '20px'}}>
                         Submit
                     </button>
