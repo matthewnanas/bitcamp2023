@@ -17,11 +17,16 @@ export default function Desktop() {
     const [chartData, setChartData] = React.useState([{name: 'Week 1', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 0, pv: 2400, amt: 2400}])
     const [roster, setRoster] = React.useState([])
     const [feed, setFeed] = React.useState<any[]>([])
+    const [selected, setSelected] = React.useState<any[]>([])
 
     const cookies = new Cookies();
 
+    const onRowsSelectionHandler = (ids: any[]) => {
+        const selectedRowsData = ids.map((id: any) => roster.find((row: { id: any; }) => row.id === id));
+        setSelected(selectedRowsData)
+    };
+
     const submit = () => {
-        alert(phone)
         fetch('http://localhost:3001/addToRoster', {
             method: 'POST',
             mode: 'cors',
@@ -44,6 +49,23 @@ export default function Desktop() {
             return resp.json();
         }).then((data) => {
             setFeed(data);
+        });
+    }
+
+    const deleteFromRoster = () => {
+        fetch('http://localhost:3001/removeFromRoster', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": cookies.get("token")
+            },
+            body: JSON.stringify(selected)
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data) => {
+            console.log(data);
         });
     }
 
@@ -105,13 +127,14 @@ export default function Desktop() {
                                     </Typography>
                                     <div style={{ height: '50px', marginTop: '10px' }}>
                                         <button className="DesktopTableUtil" onClick={() => setOpen(true)}>Add Member</button>
-                                        <button className="DesktopTableUtil" style={{marginLeft: '10px'}}>Remove</button>
+                                        <button className="DesktopTableUtil" style={{marginLeft: '10px'}} onClick={() => deleteFromRoster()}>Remove</button>
                                     </div>
                                     <div style={{ height: 400, maxWidth: '500px' }}>
                                         <DataGrid
                                             rows={roster}
                                             columns={columns}
                                             checkboxSelection
+                                            onRowSelectionModelChange={(ids: any) => onRowsSelectionHandler(ids)}
                                         />
                                     </div>
                                 </CardContent>
