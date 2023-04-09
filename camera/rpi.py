@@ -76,7 +76,8 @@ def trigger():
             "image": parsed["data"]["display_url"],
             "location": "20740",
             "message": "Incident detected @ 20740",
-            "adminEmail": None
+            "adminEmail": "",
+            "community": True
         }
 
         response = requests.post("http://localhost:3001/addIncident", json=payload)

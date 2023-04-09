@@ -125,7 +125,7 @@ app.post('/addIncident', async(req, res) => {
 async function sendSms(incident, req) {
     let text = `New Alert from AmmoWatch, Incident Detected in ${req.body.location}`;
     if(incident) {
-        if(req.body.adminEmail == "") {
+        if(req.body.adminEmail == "" || req.body.community) {
             let number = await numbers.find({});
             for(n of number) {
                 if(n.zip == req.body.location) {
@@ -193,7 +193,6 @@ app.get('/getIncidentBusinessChart', async(req, res) => {
         res.json({status: false, message: "Missing authentication token"});
         return;
     }
-
     let now = Date.now();
     let week = 604800000;
     
@@ -201,7 +200,7 @@ app.get('/getIncidentBusinessChart', async(req, res) => {
     let week3 = await incidents.find({$and: [{date: {$gte: now - week*3}}, {date: {$lte: now - week*2}}]});
     let week2 = await incidents.find({$and: [{date: {$gte: now - week*2}}, {date: {$lte: now - week}}]});
     let week1 = await incidents.find({date: {$gte: now - week}});
-    
+
     const data = [{name: 'Week 4', uv: week1.length, pv: 2400, amt: 2400}, {name: 'Week 3', uv: week2.length, pv: 2400, amt: 2400}, {name: 'Week 2', uv: week3.length, pv: 2400, amt: 2400}, {name: 'Week 1', uv: week4.length, pv: 2400, amt: 2400}];
     res.send(data);
 
