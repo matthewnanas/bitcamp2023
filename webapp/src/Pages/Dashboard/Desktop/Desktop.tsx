@@ -21,7 +21,6 @@ export default function Desktop() {
     const cookies = new Cookies();
 
     const submit = () => {
-        alert(phone)
         fetch('http://localhost:3001/addToRoster', {
             method: 'POST',
             mode: 'cors',
@@ -37,14 +36,7 @@ export default function Desktop() {
             console.log(data1);
         });
 
-        fetch(`http://localhost:3001/getIncidents`, {
-            "headers": {allIncidents: 'false', "authorization": cookies.get("token")},
-            "method": "GET",
-        }).then((resp) => {
-            return resp.json();
-        }).then((data) => {
-            setFeed(data);
-        });
+        
     }
 
     const timeConverter = (UNIX_timestamp: number) => {
@@ -53,6 +45,23 @@ export default function Desktop() {
     }
 
     React.useEffect(() => {
+
+        fetch(`http://localhost:3001/getPrivateIncidents`, {
+            "headers": {
+                authorization: cookies.get("token")
+            },
+            "method": "GET",
+        }).then((resp) => {
+            return resp.json();
+        }).then((data) => {
+            console.log(data);
+            if(data.incidents) {
+                setFeed(data.incidents);
+
+            }
+        });
+
+        
         fetch(`http://localhost:3001/getIncidentBusinessChart`, {
             "headers": {authorization: cookies.get("token")},
             "method": "GET",
@@ -160,7 +169,7 @@ export default function Desktop() {
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
                                                         <TableCell component="th" scope="row">
-                                                            <a href={row.image} target='_blank' rel="noreferrer">{timeConverter(row.date)}</a>
+                                                        <a href={row.image} target='_blank' rel="noreferrer">{timeConverter(row.date)}</a>
                                                         </TableCell>
                                                         <TableCell align="right">{row.location}</TableCell>
                                                     </TableRow>
