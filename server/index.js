@@ -174,7 +174,7 @@ app.get('/getIncidents', async(req, res) => {
         let all = await incidents.find({});
         res.send({success: true, incidents: all});
     } else {
-        let all = await incidents.find({adminEmail: null});
+        let all = await incidents.find({adminEmail: {$ne: ""}});
         res.send({success: true, incidents: all});
     }
 });
@@ -197,46 +197,6 @@ app.get('/getInternalIncidents', async(req, res) => {
     res.send(feed)
 });
 
-app.get('/getIncidentChartData', async(req, res) => {
-    // Get chart data for incidents for business REPLACE THE FILLER CODE HERE
-    let token = req.headers.authorization;
-    if(token) {
-        token = token.replace("Bearer ", "");
-        let decoded = jwt.verify(token, TOKEN_SECRET);
-        let account = await accounts.findOne({email: decoded.email});
-        if(!account) {
-            res.send({status: false, message: "account doesnt exist"});
-            return;
-        }
-
-
-
-    } else {
-        res.json({status: false, message: "Missing authentication token"});
-        return;
-    }
-    let now = Date.now();
-    let week = 604800000;
-    console.log("Here");
-    try {
-        let week4 = await incidents.find({$and: [{date: {$gte: now - week*4}}, {date: {$lte: now - week*3}}]});
-        let week3 = await incidents.find({$and: [{date: {$gte: now - week*3}}, {date: {$lte: now - week*2}}]});
-        let week2 = await incidents.find({$and: [{date: {$gte: now - week*2}}, {date: {$lte: now - week}}]});
-        let week1 = await incidents.find({date: {$gte: now - week}});
-        const data = [{name: 'Week 4', uv: week1.length, pv: 2400, amt: 2400}, {name: 'Week 3', uv: week2.length, pv: 2400, amt: 2400}, {name: 'Week 2', uv: week3.length, pv: 2400, amt: 2400}, {name: 'Week 1', uv: week4.length, pv: 2400, amt: 2400}];
-        res.send(data);
-    } catch(e) {
-        console.log(e);
-    }
-    //.log(week4);
-    //console.log(week3);
-    //console.log(week2);
-    //console.log(week1);
-    //week4 = week4
-
-
-    
-});
 
 app.get('/getIncidentBusinessChart', async(req, res) => {
 
