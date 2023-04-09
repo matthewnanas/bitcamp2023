@@ -167,7 +167,7 @@ app.post('/addIncident', async(req, res) => {
                 for(n of number) {
                     if(n.zip == req.body.location) {
                         console.log(n);
-                        send(n.number, text)
+                        send(n.number, text, req.body.image);
                     }
                 }
             }
