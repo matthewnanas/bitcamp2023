@@ -22,7 +22,7 @@ export default function Mobile() {
     }, [])
 
     const timeConverter = (UNIX_timestamp: number) => {
-        var a = new Date(UNIX_timestamp / 1000);
+        var a = new Date(UNIX_timestamp);
         return a.toString();
     }
 
