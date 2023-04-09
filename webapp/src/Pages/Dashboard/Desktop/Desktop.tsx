@@ -47,6 +47,11 @@ export default function Desktop() {
         });
     }
 
+    const timeConverter = (UNIX_timestamp: number) => {
+        var a = new Date(UNIX_timestamp / 1000);
+        return a.toString();
+    }
+
     React.useEffect(() => {
         fetch(`http://localhost:3001/getIncidentBusinessChart`, {
             "headers": {authorization: cookies.get("token")},
@@ -155,7 +160,7 @@ export default function Desktop() {
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
                                                         <TableCell component="th" scope="row">
-                                                            {row.time}
+                                                            <a href={row.image} target='_blank' rel="noreferrer">{timeConverter(row.date)}</a>
                                                         </TableCell>
                                                         <TableCell align="right">{row.location}</TableCell>
                                                     </TableRow>

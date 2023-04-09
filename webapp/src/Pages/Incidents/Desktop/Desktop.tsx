@@ -14,8 +14,14 @@ export default function Desktop() {
         }).then((data) => {
             console.log(data);
             setFeed(data.incidents);
+            console.log(data.incidents.length)
         });
     }, [])
+
+    const timeConverter = (UNIX_timestamp: number) => {
+        var a = new Date(UNIX_timestamp / 1000);
+        return a.toString();
+    }
 
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
@@ -57,7 +63,7 @@ export default function Desktop() {
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
                                                         <TableCell component="th" scope="row">
-                                                            {row.date}
+                                                            <a href={row.image} target='_blank' rel="noreferrer">{timeConverter(row.date)}</a>
                                                         </TableCell>
                                                         <TableCell align="right">{row.location}</TableCell>
                                                     </TableRow>
