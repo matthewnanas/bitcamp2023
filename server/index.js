@@ -171,7 +171,7 @@ app.post('/addIncident', async(req, res) => {
 
 app.get('/getIncidents', async(req, res) => {
     console.log("Hi");
-    let all = await incidents.findOne({date: 1679795594515});
+    let all = await incidents.find();
     console.log(all);
     res.send({success: true, incidents: all});
 

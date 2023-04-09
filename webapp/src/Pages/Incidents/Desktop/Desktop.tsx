@@ -13,7 +13,7 @@ export default function Desktop() {
             return resp.json();
         }).then((data) => {
             console.log(data);
-            setFeed(data);
+            setFeed(data.incidents);
         });
     }, [])
 
@@ -57,7 +57,7 @@ export default function Desktop() {
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
                                                         <TableCell component="th" scope="row">
-                                                            {row.time}
+                                                            {row.date}
                                                         </TableCell>
                                                         <TableCell align="right">{row.location}</TableCell>
                                                     </TableRow>
