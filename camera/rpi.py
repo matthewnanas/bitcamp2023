@@ -72,7 +72,7 @@ def trigger():
 
         # post this to express
         payload = {
-            "time": parsed["data"]["time"],
+            "date": parsed["data"]["time"],
             "image": parsed["data"]["display_url"],
             "location": "20740",
             "message": "Incident detected @ 20740",
