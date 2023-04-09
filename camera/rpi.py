@@ -75,9 +75,12 @@ def trigger():
             "time": parsed["data"]["time"],
             "image": parsed["data"]["display_url"],
             "location": "20740",
-            "message": "Incident detected @ 20740"
-            "admin_email": ""
+            "message": "Incident detected @ 20740",
+            "adminEmail": None
         }
+
+        response = requests.post("http://localhost:3000/addIncident", json=payload)
+        print(response.status_code)
 
 def main():
     livefeed()

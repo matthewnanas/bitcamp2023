@@ -153,6 +153,7 @@ app.post('/addIncident', async(req, res) => {
     let incident = await incidents.findOne({date: req.body.date}); // Using Lat/Long it will find the same one
     if(!incident) {
         incident = await incidents.create({
+            image: req.body.image,
             location: req.body.location,
             date: req.body.date,
             message: req.body.message,
