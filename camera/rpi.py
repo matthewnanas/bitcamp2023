@@ -79,7 +79,7 @@ def trigger():
             "adminEmail": None
         }
 
-        response = requests.post("http://localhost:3000/addIncident", json=payload)
+        response = requests.post("http://localhost:3001/addIncident", json=payload)
         print(response.status_code)
 
 def main():
