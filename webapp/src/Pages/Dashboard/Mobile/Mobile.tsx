@@ -1,6 +1,6 @@
 import React from "react";
 import './Mobile.css';
-import { Box, Card, CardContent, FormControlLabel, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Card, CardContent, FormControlLabel, Grid, Modal, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { Item } from "../../../Components/item";
@@ -208,6 +208,33 @@ export default function Mobile() {
                     </Grid>
                 </Grid>
             </Box>
+
+            <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{
+                    position: 'absolute' as 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 400,
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <TextField id="outlined-search" label="📞 Number" type="text" onChange={(e: any) => setPhone(e.target.value)} value={phone} style={{width: "400px", marginBottom: "20px"}}/>
+                    <br />
+                    <TextField id="outlined-search" label="🧑 Name" type="text" onChange={(e: any) => setName(e.target.value)} value={name} style={{width: "400px"}} />
+                    <br />
+                    <button className='DesktopNumberAdd' onClick={() => submit()} style={{marginTop: '20px'}}>
+                        Submit
+                    </button>
+                </Box>
+            </Modal>
         </div>
     )
 }
