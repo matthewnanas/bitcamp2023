@@ -1,6 +1,8 @@
 import cv2
 from azure.cognitiveservices.vision.customvision.prediction import CustomVisionPredictionClient
 from msrest.authentication import ApiKeyCredentials
+import base64
+import requests
 
 # Create variables for your project
 publish_iteration_name = "Iteration11"
@@ -53,6 +55,29 @@ def findWeapons(captureName, image):
                 result_image = cv2.rectangle(image, (int(left), int(top)), (int(left + width), int(top + height)), color, 3)
                 cv2.putText(result_image, f"{prediction.probability * 100 :.2f}%", (int(left), int(top)-10), fontFace = cv2.FONT_HERSHEY_SIMPLEX, fontScale = 0.7, color = color, thickness = 2)
                 cv2.imwrite('result.png', result_image)
+                trigger()
+
+def trigger():
+    with open("result.png", "rb") as image:
+        response = requests.post(
+            'https://api.imgbb.com/1/upload',
+            params={'key': 'b8c09a719f0fcd5cc5f96adf473893a4'},
+            files={'image': image}
+        )
+
+        parsed = response.json()
+
+        print("Status Code", response.status_code)
+        print("URL ", parsed["data"]["display_url"])
+
+        # post this to express
+        payload = {
+            "time": parsed["data"]["time"],
+            "image": parsed["data"]["display_url"],
+            "location": "20740",
+            "message": "Incident detected @ 20740"
+            "admin_email": ""
+        }
 
 def main():
     livefeed()
