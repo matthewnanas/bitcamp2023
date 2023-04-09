@@ -36,6 +36,15 @@ export default function Desktop() {
         ).then((data1) => {
             console.log(data1);
         });
+
+        fetch(`http://localhost:3001/getIncidents`, {
+            "headers": {allIncidents: 'false', "authorization": cookies.get("token")},
+            "method": "GET",
+        }).then((resp) => {
+            return resp.json();
+        }).then((data) => {
+            setFeed(data);
+        });
     }
 
     React.useEffect(() => {
@@ -66,7 +75,7 @@ export default function Desktop() {
             setRoster(data);
         });
     }, [])
-    
+
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
             <Box sx={{ flexGrow: 1 }}>
