@@ -5,6 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { columns } from "../../../Components/columns";
 import { Item } from "../../../Components/item";
+import Cookies from "universal-cookie";
 
 export default function Desktop() {
     const [open, setOpen] = React.useState(false);
@@ -17,33 +18,61 @@ export default function Desktop() {
     const [roster, setRoster] = React.useState([])
     const [feed, setFeed] = React.useState<any[]>([])
 
+    const cookies = new Cookies();
+
     const submit = () => {
         alert(phone)
+        fetch('http://localhost:3001/addToRoster', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": cookies.get("token")
+            },
+            body: JSON.stringify({number: phone, name: name})
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data1) => {
+            console.log(data1);
+        });
     }
 
     React.useEffect(() => {
-        fetch("http://localhost:3001/getIncidentChartData", {
-            "headers": {
-                "accept": "application/json",
-            },
+
+        fetch(`http://localhost:3001/getIncidentBusinessChart`, {
+            "headers": {authorization: cookies.get("token")},
             "method": "GET",
-        }).then((response) => {
-            return response.json();
+        }).then((resp) => {
+            return resp.json();
         }).then((data) => {
             setChartData(data);
+
         });
 
+
         fetch("http://localhost:3001/getRoster", {
-            "headers": {
-                "accept": "application/json",
-            },
+                "headers": {authorization: cookies.get("token")},
+                "method": "GET",
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                setRoster(data);
+            });
+        
+
+        
+        
+
+        fetch("http://localhost:3001/getRoster", {
+            "headers": {authorization: cookies.get("token")},
             "method": "GET",
         }).then((response) => {
             return response.json();
         }).then((data) => {
             setRoster(data);
         });
-
+        /*
         fetch("http://localhost:3001/getInternalIncidents", {
             "headers": {
                 "accept": "application/json",
@@ -54,8 +83,9 @@ export default function Desktop() {
         }).then((data) => {
             setFeed(data);
         });
+        */
+        
     }, [])
-
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
             <Box sx={{ flexGrow: 1 }}>
@@ -101,13 +131,13 @@ export default function Desktop() {
                                         Incident Overview
                                     </Typography>
                                     <div>
-                                        <LineChart width={400} height={300} data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                                            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                                            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                                            <XAxis dataKey="name" />
-                                            <YAxis />
-                                            <Tooltip />
-                                        </LineChart>
+                                    <LineChart width={450} height={300} data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                        <XAxis dataKey="name" />
+                                        <YAxis />
+                                        <Tooltip />
+                                    </LineChart>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -167,9 +197,9 @@ export default function Desktop() {
                     boxShadow: 24,
                     p: 4,
                 }}>
-                    <TextField id="outlined-search" label="📞 Number" type="text" onChange={(e: any) => setPhone(e.target.value)} value={phone} style={{marginBottom: '20px', width: '400px'}} />
+                    <TextField id="outlined-search" label="📞 Number" type="text" onChange={(e: any) => setPhone(e.target.value)} value={phone} />
                     <br />
-                    <TextField id="outlined-search" label="🧑 Name" type="text" onChange={(e: any) => setName(e.target.value)} value={name} style={{width: '400px'}} />
+                    <TextField id="outlined-search" label="🧑 Name" type="text" onChange={(e: any) => setName(e.target.value)} value={name} />
                     <br />
                     <button className='DesktopNumberAdd' onClick={() => submit()} style={{marginTop: '20px'}}>
                         Submit

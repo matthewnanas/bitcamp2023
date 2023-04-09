@@ -10,10 +10,25 @@ const feed = [
     {
         time: '2023-04-08T03:34:27+0000',
         location: 'Maryland'
+
     },
 ]
 
 export default function Desktop() {
+    const [chartData, setChartData] = React.useState([{name: 'Week 1', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 0, pv: 2400, amt: 2400}])
+
+    React.useEffect(() => {
+        fetch("http://localhost:3001/getIncidentChartData", {
+            "headers": {
+                "accept": "application/json",
+            },
+            "method": "GET",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            setChartData(data);
+        });
+    })
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
             <Box sx={{ flexGrow: 1 }}>
