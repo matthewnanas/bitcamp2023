@@ -39,7 +39,6 @@ export default function Desktop() {
     }
 
     React.useEffect(() => {
-
         fetch(`http://localhost:3001/getIncidentBusinessChart`, {
             "headers": {authorization: cookies.get("token")},
             "method": "GET",
@@ -47,9 +46,7 @@ export default function Desktop() {
             return resp.json();
         }).then((data) => {
             setChartData(data);
-
         });
-
 
         fetch("http://localhost:3001/getRoster", {
                 "headers": {authorization: cookies.get("token")},
@@ -60,10 +57,6 @@ export default function Desktop() {
                 setRoster(data);
             });
         
-
-        
-        
-
         fetch("http://localhost:3001/getRoster", {
             "headers": {authorization: cookies.get("token")},
             "method": "GET",
@@ -72,20 +65,8 @@ export default function Desktop() {
         }).then((data) => {
             setRoster(data);
         });
-        /*
-        fetch("http://localhost:3001/getInternalIncidents", {
-            "headers": {
-                "accept": "application/json",
-            },
-            "method": "GET",
-        }).then((response) => {
-            return response.json();
-        }).then((data) => {
-            setFeed(data);
-        });
-        */
-        
     }, [])
+    
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
             <Box sx={{ flexGrow: 1 }}>
