@@ -10,6 +10,7 @@ export default function Desktop() {
     const [open, setOpen] = React.useState(false);
     const [checked, setChecked] = React.useState(true);
     const [phone, setPhone] = React.useState('');
+    const [name, setName] = React.useState('');
 
     // Display data
     const [chartData, setChartData] = React.useState([{name: 'Week 1', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 0, pv: 2400, amt: 2400}])
@@ -167,6 +168,8 @@ export default function Desktop() {
                     p: 4,
                 }}>
                     <TextField id="outlined-search" label="📞 Number" type="text" onChange={(e: any) => setPhone(e.target.value)} value={phone} />
+                    <br />
+                    <TextField id="outlined-search" label="🧑 Name" type="text" onChange={(e: any) => setName(e.target.value)} value={name} />
                     <br />
                     <button className='DesktopNumberAdd' onClick={() => submit()} style={{marginTop: '20px'}}>
                         Submit

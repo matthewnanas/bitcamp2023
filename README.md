@@ -23,13 +23,24 @@ To register for our system, follow these simple and easy steps:
 
 4) Done!
 
+<h2> Getting Started </h2>
+
+To get started with our system, follow the steps listed below
+
+1) 
+
+2)
+
+3)
+
+
 <h2> Technical Details </h2>
 
 Our project was built using Node.JS, React, MongoDB, Express.JS, Typescript, SHA256 Hashing, JWT, Twilio, Google Maps API, Google Geolocation API, Microsoft Azure, and Azure Machine learning
 
-For the backend API we utalized Node.js
-
 For the front end we utalized React
+
+For the backend API we utalized Node.js
 
 We used MongoDB to store phone numbers, acounts, and secure passwords
 
@@ -40,8 +51,6 @@ In the future, we plan to expand our system into schools, restaurants, etc. to h
 <h2> Closing Statement </h2>
 
 Thank you for using our system to help combat gun violence and potentially save lives!
-
-The major goal with our project is to help shorten response time between the event occuring and getting help on the scene.
 
 ---
 
