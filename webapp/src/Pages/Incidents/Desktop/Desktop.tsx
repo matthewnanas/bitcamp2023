@@ -13,8 +13,11 @@ export default function Desktop() {
             return resp.json();
         }).then((data) => {
             console.log(data);
-            setFeed(data.incidents);
-            console.log(data.incidents.length)
+            if(data.incidents) {
+                setFeed(data.incidents);
+            } else {
+                console.log(data);
+            }
         });
     }, [])
 

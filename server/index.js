@@ -178,8 +178,28 @@ app.get('/getIncidents', async(req, res) => {
 });
 
 app.get('/getPrivateIncidents', async(req, res) => {
-    let all = await incidents.find({adminEmail: {$ne: ""}});
-    res.send({success: true, incidents: all});
+    let token = req.headers.authorization;
+    let email;
+    if(token) {
+        token = token.replace("Bearer ", "");
+        let decoded = jwt.verify(token, TOKEN_SECRET);
+        let account = await accounts.findOne({email: decoded.email});
+        if(!account) {
+            res.json({status: false, message: "Account not found"});
+            return;
+        }
+        email = decoded.email;
+    } else {
+        res.json({status: false, message: "Missing authentication token"});
+        return;
+    }
+
+    let all = await incidents.find({adminEmail: {$eq: email}});
+    if(all) {
+        res.send({success: true, incidents: all});
+    } else {
+        res.send({success: false, incidents: ""});
+    }
 })
 
 // This stuff will be for the "business" accounts
