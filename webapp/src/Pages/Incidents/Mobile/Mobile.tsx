@@ -1,29 +1,31 @@
 import React from "react";
 import './Mobile.css';
 import { Box, Card, CardContent, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from "@mui/material";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-const data = [{name: 'Week 1', uv: 1, pv: 2400, amt: 2400}, {name: 'Week 2', uv: 2, pv: 2400, amt: 2400}, {name: 'Week 3', uv: 0, pv: 2400, amt: 2400}, {name: 'Week 4', uv: 4, pv: 2400, amt: 2400}];
-
-const feed = [
-    {
-        time: '2023-04-08T03:34:27+0000',
-        location: 'Maryland'
-    },
-    {
-        time: '2023-04-08T03:34:27+0000',
-        location: 'Maryland'
-    },
-]
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+import { Item } from '../../../Components/item';
 
 export default function Mobile() {
+    const [feed, setFeed] = React.useState<any[]>([])
+
+    React.useEffect(() => {
+        fetch(`http://localhost:3001/getIncidents`, {
+            "method": "GET",
+        }).then((resp) => {
+            return resp.json();
+        }).then((data) => {
+            console.log(data);
+            if(data.incidents) {
+                setFeed(data.incidents);
+            } else {
+                console.log(data);
+            }
+        });
+    }, [])
+
+    const timeConverter = (UNIX_timestamp: number) => {
+        var a = new Date(UNIX_timestamp / 1000);
+        return a.toString();
+    }
+
     return (
         <div style={{marginLeft: '10px', marginTop: '10px'}}>
             <Box sx={{ flexGrow: 1 }}>
@@ -36,13 +38,7 @@ export default function Mobile() {
                                         Incident Map
                                     </Typography>
                                     <div>
-                                    <LineChart width={450} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                                        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                                        <XAxis dataKey="name" />
-                                        <YAxis />
-                                        <Tooltip />
-                                    </LineChart>
+                                        <iframe title="heatmap" src="./Heatmap/index.html" width="100%" height="500px"></iframe>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -61,17 +57,17 @@ export default function Mobile() {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {feed.map((row, i) => (
+                                                {feed.length > 0 ? feed.map((row, i) => (
                                                     <TableRow
                                                         key={i}
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
                                                         <TableCell component="th" scope="row">
-                                                            {row.time}
+                                                            <a href={row.image} target='_blank' rel="noreferrer">{timeConverter(row.date)}</a>
                                                         </TableCell>
                                                         <TableCell align="right">{row.location}</TableCell>
                                                     </TableRow>
-                                                ))}
+                                                )) : null}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
