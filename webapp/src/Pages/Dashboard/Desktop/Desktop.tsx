@@ -39,6 +39,10 @@ export default function Desktop() {
         
     }
 
+    const remove = () => {
+        
+    }
+
     const timeConverter = (UNIX_timestamp: number) => {
         var a = new Date(UNIX_timestamp / 1000);
         return a.toString();
@@ -114,7 +118,7 @@ export default function Desktop() {
                                     </Typography>
                                     <div style={{ height: '50px', marginTop: '10px' }}>
                                         <button className="DesktopTableUtil" onClick={() => setOpen(true)}>Add Member</button>
-                                        <button className="DesktopTableUtil" style={{marginLeft: '10px'}}>Remove</button>
+                                        <button className="DesktopTableUtil" style={{marginLeft: '10px'}} onClick={() => remove()}>Remove</button>
                                     </div>
                                     <div style={{ height: 400, maxWidth: '500px' }}>
                                         <DataGrid
