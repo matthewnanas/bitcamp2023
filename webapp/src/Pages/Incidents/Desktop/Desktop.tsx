@@ -4,7 +4,7 @@ import { Box, Card, CardContent, Grid, Paper, Table, TableBody, TableCell, Table
 import { Item } from '../../../Components/item';
 
 export default function Desktop() {
-    const [feed, setFeed] = React.useState([])
+    const [feed, setFeed] = React.useState<any[]>([])
 
     React.useEffect(() => {
         fetch(`http://localhost:3001/getIncidents`, {
